@@ -10,8 +10,8 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "super-secret-key-change-in-production"
     DEBUG: bool = False
 
-    # Database
-    DATABASE_URL: str = "sqlite:///./taskflow.db"
+    # Database — en memoria, sin archivo en disco
+    DATABASE_URL: str = "sqlite:///:memory:"
 
     # AWS
     AWS_REGION: str = "us-east-1"

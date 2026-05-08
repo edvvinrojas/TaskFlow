@@ -95,8 +95,8 @@ def build_user_data(bucket_name):
 set -e
 exec > /var/log/taskflow-setup.log 2>&1
 
-dnf update -y
-dnf install -y python3 python3-pip git
+yum update -y
+yum install -y python3 python3-pip git
 
 cd /home/ec2-user
 git clone {args.repo_url} app
