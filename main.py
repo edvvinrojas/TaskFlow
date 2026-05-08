@@ -1,12 +1,9 @@
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 import logging
 import time
-import boto3
-import os
 from contextlib import asynccontextmanager
 
 from app.database import engine, Base
@@ -58,9 +55,14 @@ async def log_requests(request: Request, call_next):
     return response
 
 
-# Templates
+# Static & Templates
 app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    with open("templates/index.html") as f:
+        return f.read()
 
 
 # Routers
@@ -68,14 +70,3 @@ app.include_router(health.router, prefix="/api/health", tags=["Health"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
 app.include_router(tasks.router, prefix="/api/tasks", tags=["Tasks"])
 app.include_router(files.router, prefix="/api/files", tags=["Files"])
-
-
-# Frontend
-@app.get("/", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-
-@app.get("/health-dashboard", response_class=HTMLResponse)
-async def health_dashboard(request: Request):
-    return templates.TemplateResponse("health.html", {"request": request})
