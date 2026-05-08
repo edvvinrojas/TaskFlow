@@ -1,4 +1,4 @@
-instance_id=i-02bc5f163f7c01ecc
-public_ip=35.171.88.157
-s3_bucket=taskflow-attachments-1778281201
-app_url=http://35.171.88.157:8000
+instance_id=i-029fc8c338ed3229a
+public_ip=23.22.97.186
+s3_bucket=taskflow-attachments-1778282293
+app_url=http://23.22.97.186:8000
